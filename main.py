@@ -84,6 +84,12 @@ def main(page: ft.Page):
                 int(input_anno.value),
                 int(casella_t.value)
             )
+            input_marca.value = ""
+            imput_modello.value = ""
+            input_anno.value = ""
+            casella_t.value = "0"
+
+
             aggiorna_lista_auto()
             page.update()
         except ValueError:
