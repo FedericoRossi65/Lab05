@@ -1,6 +1,6 @@
 import flet as ft
 
-import automobile
+
 from alert import AlertManager
 from autonoleggio import Autonoleggio
 
@@ -64,7 +64,7 @@ def main(page: ft.Page):
 
         casella_t.value = str(currentVal + 1)
         casella_t.update()
-        return currentVal
+
 
     def rimuovi_valore(e):
         currentVal = int(casella_t.value)
@@ -72,10 +72,10 @@ def main(page: ft.Page):
 
         casella_t.value = str(currentVal - 1)
         casella_t.update()
-        return currentVal
+
     def nuova_auto():
         nuova = autonoleggio.aggiungi_automobile(input_marca, imput_modello, input_anno,casella_t)
-        return nuova
+
     def aggiorna_lista_auto():
         lista_auto.controls.clear()
         for auto in autonoleggio.automobili_ordinate_per_marca():
