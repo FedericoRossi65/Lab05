@@ -59,6 +59,20 @@ def main(page: ft.Page):
 
 
     # --- FUNZIONI APP ---
+    def aggiungi_val(e):
+        currentVal = int(casella_t.value)
+
+        casella_t.value = str(currentVal + 1)
+        casella_t.update()
+        return currentVal
+
+    def rimuovi_valore(e):
+        currentVal = int(casella_t.value)
+
+
+        casella_t.value = str(currentVal - 1)
+        casella_t.update()
+        return currentVal
     def nuova_auto():
         nuova = autonoleggio.aggiungi_automobile(input_marca, imput_modello, input_anno,casella_t)
         return nuova
@@ -81,8 +95,8 @@ def main(page: ft.Page):
         page.update()
 
     # Handlers per la gestione dei bottoni utili all'inserimento di una nuova auto
-    # TODO
-
+    bott_dim.on_click = rimuovi_valore
+    bott_agg.on_click = aggiungi_val
     # --- EVENTI ---
     toggle_cambia_tema = ft.Switch(label="Tema scuro", value=True, on_change=cambia_tema)
     pulsante_conferma_responsabile = ft.ElevatedButton("Conferma", on_click=conferma_responsabile)
