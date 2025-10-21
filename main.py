@@ -67,14 +67,27 @@ def main(page: ft.Page):
 
 
     def rimuovi_valore(e):
+
         currentVal = int(casella_t.value)
+        if currentVal > 0:
 
 
-        casella_t.value = str(currentVal - 1)
-        casella_t.update()
+            casella_t.value = str(currentVal - 1)
+            casella_t.update()
 
-    def nuova_auto():
-        nuova = autonoleggio.aggiungi_automobile(input_marca, imput_modello, input_anno,casella_t)
+    def nuova_auto(e):
+        try:
+            #chiamo la funzione di autonoleggio aggiungi automobibile e converto le stringhenin interi dove è necessario
+            autonoleggio.aggiungi_automobile(
+                input_marca.value.strip(),
+                imput_modello.value.strip(),
+                int(input_anno.value),
+                int(casella_t.value)
+            )
+            aggiorna_lista_auto()
+            page.update()
+        except ValueError:
+            alert.show_alert("⚠️ Inserisci valori numerici validi per anno e posti!")
 
     def aggiorna_lista_auto():
         lista_auto.controls.clear()
@@ -102,7 +115,7 @@ def main(page: ft.Page):
     pulsante_conferma_responsabile = ft.ElevatedButton("Conferma", on_click=conferma_responsabile)
 
     # Bottoni per la gestione dell'inserimento di una nuova auto
-    # TODO
+    agg_auto.on_click = nuova_auto
 
     # --- LAYOUT ---
     page.add(
