@@ -1,6 +1,9 @@
 import flet as ft
+
+import automobile
 from alert import AlertManager
 from autonoleggio import Autonoleggio
+
 
 FILE_AUTO = "automobili.csv"
 
@@ -38,7 +41,27 @@ def main(page: ft.Page):
     # Tutti i TextField per le info necessarie per aggiungere una nuova automobile (marca, modello, anno, contatore posti)
     # TODO
 
+
+    # casella di testo dove dobbiamo inserire la marca,modello,anno
+    input_marca = ft.TextField(value='Inserisci marca')
+    imput_modello = ft.TextField(value='Inserisci modello')
+    input_anno = ft.TextField(value='Inserisci anno')
+    #bottoni contarore e casella di testo
+    bott_dim = ft.IconButton(icon = ft.Icons.REMOVE,
+                             icon_size=24,
+                             icon_color='red'
+                             )
+    casella_t = ft.TextField(width=50,disabled=True,value=0,border_color='green',text_align=ft.TextAlign.CENTER)
+    bott_agg = ft.IconButton(icon = ft.Icons.ADD,
+                             icon_size=24,
+                             icon_color='green')
+    agg_auto = ft.ElevatedButton('Aggiungi auto')
+
+
     # --- FUNZIONI APP ---
+    def nuova_auto():
+        nuova = autonoleggio.aggiungi_automobile(input_marca, imput_modello, input_anno,casella_t)
+        return nuova
     def aggiorna_lista_auto():
         lista_auto.controls.clear()
         for auto in autonoleggio.automobili_ordinate_per_marca():
@@ -73,6 +96,7 @@ def main(page: ft.Page):
 
         # Sezione 1
         txt_titolo,
+
         txt_responsabile,
         ft.Divider(),
 
@@ -82,8 +106,17 @@ def main(page: ft.Page):
                controls=[input_responsabile, pulsante_conferma_responsabile],
                alignment=ft.MainAxisAlignment.CENTER),
 
+
+
         # Sezione 3
-        # TODO
+
+        ft.Divider(),
+        ft.Text("inserisci automobili", size=20),
+        ft.Row(spacing=5,
+               controls=[input_marca, imput_modello, input_anno,bott_dim,casella_t,bott_agg],
+               alignment=ft.MainAxisAlignment.CENTER),
+        ft.Row(spacing=5,controls=[agg_auto],alignment=ft.MainAxisAlignment.CENTER),
+
 
         # Sezione 4
         ft.Divider(),
