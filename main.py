@@ -108,7 +108,7 @@ def main(page: ft.Page):
 
 
 
-        # Sezione 33
+        # Sezione 3
 
         ft.Divider(),
         ft.Text("inserisci automobili", size=20),
