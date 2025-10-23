@@ -39,13 +39,13 @@ def main(page: ft.Page):
     lista_auto = ft.ListView(expand=True, spacing=5, padding=10, auto_scroll=True)
 
     # Tutti i TextField per le info necessarie per aggiungere una nuova automobile (marca, modello, anno, contatore posti)
-    # TODO
+
 
 
     # casella di testo dove dobbiamo inserire la marca,modello,anno
-    input_marca = ft.TextField(value='Inserisci marca')
-    imput_modello = ft.TextField(value='Inserisci modello')
-    input_anno = ft.TextField(value='Inserisci anno')
+    input_marca = ft.TextField(label='Inserisci marca')
+    imput_modello = ft.TextField(label='Inserisci modello')
+    input_anno = ft.TextField(label='Inserisci anno')
     #bottoni contarore e casella di testo
     bott_dim = ft.IconButton(icon = ft.Icons.REMOVE,
                              icon_size=24,
@@ -76,27 +76,39 @@ def main(page: ft.Page):
             casella_t.update()
 
     def nuova_auto(e):
+        #controllo se tutti i campi sono inseriti
+        if (
+                input_marca.value.strip() == ''
+                or imput_modello.value.strip() == ''
+                or input_anno.value.strip() == ''
+                or casella_t.value.strip() == ''
+                or casella_t.value == '0'
+        ):
+            alert.show_alert("⚠️ Inserisci tutti i campi prima di aggiungere un'auto!")
+            return
         try:
-            #chiamo la funzione di autonoleggio aggiungi automobibile e converto le stringhenin interi dove è necessario
-            autonoleggio.aggiungi_automobile(
-                input_marca.value.strip(),
-                imput_modello.value.strip(),
-                int(input_anno.value),
-                int(casella_t.value)
-            )
-            input_marca.value = ""
-            imput_modello.value = ""
-            input_anno.value = ""
-            casella_t.value = "0"
+                #chiamo la funzione di autonoleggio aggiungi automobibile e converto le stringhenin interi dove è necessario
+                autonoleggio.aggiungi_automobile(
+                    input_marca.value.strip(),
+                    imput_modello.value.strip(),
+                    int(input_anno.value),
+                    int(casella_t.value)
+                )
+                input_marca.value = ""
+                imput_modello.value = ""
+                input_anno.value = ""
+                casella_t.value = "0"
 
 
-            aggiorna_lista_auto()
-            page.update()
+                aggiorna_lista_auto()
+                page.update()
         except ValueError:
-            alert.show_alert("⚠️ Inserisci valori numerici validi per anno e posti!")
+                alert.show_alert("⚠️ Inserisci valori numerici validi per anno e posti!")
+
 
     def aggiorna_lista_auto():
         lista_auto.controls.clear()
+
         for auto in autonoleggio.automobili_ordinate_per_marca():
             stato = "✅" if auto.disponibile else "⛔"
             lista_auto.controls.append(ft.Text(f"{stato} {auto}"))
